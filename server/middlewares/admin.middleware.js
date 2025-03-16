@@ -21,7 +21,7 @@ const adminauthorization = async  (req ,res ,next) =>{
         if (!user){
             return res.status(404).json({message:"No user found with this id"});
         }
-        if(user.role !== "admin"){
+        if(user.role !== "admin" && user.role !== "Admin"){
             return res.status(403).json({message:"Not authorized to access this route"});
         }
         req.user = user;

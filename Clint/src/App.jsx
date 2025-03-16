@@ -1,25 +1,11 @@
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import AppRoutes from "./routes/app.routes"; // ✅ Import only routes
-import { UserProvider } from "./context/user.context";
-import { ProductProvider } from "./context/product.context";
-import { OrderProvider } from "./context/order.context";
-import { CartProvider } from "./context/cart.context";
-
+import React from 'react';
+import Routes from "./Routes/routes";
 const App = () => {
   return (
-    <UserProvider>
-      <ProductProvider>
-        <OrderProvider>
-          <CartProvider>
-            <BrowserRouter> 
-              <AppRoutes />
-            </BrowserRouter>
-          </CartProvider>
-        </OrderProvider>
-      </ProductProvider>
-    </UserProvider>
-  );
-};
+    <div> 
+      <Routes />
+    </div>
+  )
+}
 
-export default App;
+export default App

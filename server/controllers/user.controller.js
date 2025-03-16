@@ -39,20 +39,25 @@ export const createUser = async (req, res, next) => {
 
 export const updateUser = async (req, res, next) => {
     try {
-        const { name, email, password } = req.body;
+        const updates = {}; // Store only provided fields
 
-        let updatedFields = { name, email };
+        // Add only the fields that are provided in the request
+        Object.keys(req.body).forEach((key) => {
+            if (req.body[key] !== undefined && req.body[key] !== "") {
+                updates[key] = req.body[key];
+            }
+        });
 
-        if (password) {
+        // If password is provided, hash it before updating
+        if (updates.password) {
             const salt = await bcrypt.genSalt(10);
-            updatedFields.password = await bcrypt.hash(password, salt);
+            updates.password = await bcrypt.hash(updates.password, salt);
         }
 
-        const user = await User.findByIdAndUpdate(
-            req.params.id, 
-            updatedFields, 
-            { new: true, runValidators: true } 
-        );
+        const user = await User.findByIdAndUpdate(req.params.id, updates, {
+            new: true, // Return updated document
+            runValidators: true, // Ensure data validation
+        });
 
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
@@ -64,6 +69,7 @@ export const updateUser = async (req, res, next) => {
         next(error);
     }
 };
+
 
 export const deleteUser = async (req, res, next) => {
     try {

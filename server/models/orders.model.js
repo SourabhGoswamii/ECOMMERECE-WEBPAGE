@@ -3,10 +3,14 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-    user: {
+    username: {
+        type: String,
+        required: true
+    },
+    user:{
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
     },
     products: [
         {
@@ -31,12 +35,10 @@ const orderSchema = new Schema({
         enum: ['Pending', 'Shipped', 'Delivered', 'Cancelled'],
         default: 'Pending'
     },
-    shippingAddress: {
-        street: String,
-        city: String,
-        state: String,
-        zip: String,
-        country: String
+    shippingAddress:{
+        type: String,
+        required: true,
+        
     }
 }, {
     timestamps: true

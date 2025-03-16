@@ -4,6 +4,7 @@ export const getAllOrders = async (req, res, next) => {
     try {
         const allOrders = await orders.find();
         res.status(200).json({ success: true, data: allOrders });
+        console.log(allOrders);
     } catch (error) {
         next(error);
     }
@@ -26,8 +27,10 @@ export const getOrderById = async (req, res, next) => {
 
 export const createOrder = async (req, res, next) => {
     try {
-        const { userId, products, totalAmount, status } = req.body;         //here products is an array of objects with product and quantity
-        const order = await orders.create({ userId, products, totalAmount, status });
+        console.log(req.body);
+        const { user, products, totalAmount, status,shippingAddress,username } = req.body; 
+        console.log(products);
+        const order = await orders.create({ user, products, totalAmount, status,shippingAddress,username });
         res.status(201).json({ success: true, data: order });
     } catch (error) {
         next(error);
@@ -73,7 +76,7 @@ export const cancelOrder = async (req, res, next) => {
 
 export const getOrdersByUserId = async (req, res, next) => {
     try {
-        const userOrders = await orders.find({ userId: req.params.id });
+        const userOrders = await orders.find({ user: req.params.id });
 
         if (!userOrders) {
             const error = new Error("Orders not found for this user");

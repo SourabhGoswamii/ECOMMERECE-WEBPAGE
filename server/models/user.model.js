@@ -25,15 +25,12 @@ const UserSchema = mongoose.Schema(
       maxlength: 1024,
     },
     role: { type: String, enum: ["user", "admin"], default: "user" },
-    address: {
-      street: String,
-      city: String,
-      state: String,
-      zip: String,
-      country: String
+    address: { type: String, required: [true, "Please provide an address"]
     },
-    phone: { type: String }
-  },
+    phone: { type: String , required: [true, "Please provide a phone number"],match: [/^(\+\d{1,3}[- ]?)?\d{10}$/, "Please provide a valid phone number"],}
+  ,otp: { type: String },
+  otpExpires: { type: Date }, 
+},
   { timestamps: true }
 );
 

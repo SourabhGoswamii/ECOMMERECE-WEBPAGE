@@ -22,8 +22,13 @@ const ProductSchema = mongoose.Schema({
         required: true,
         default: 0,
     },
-    images: {
-        type: [String],
+    // Change this from 'images' to 'imageUrl' for consistency
+    imageUrl: {
+        type: String,
+    },
+    // Add cloudinaryId for reference when deleting or updating images
+    cloudinaryId: {
+        type: String,
     },
     
 }, { timestamps: true });
